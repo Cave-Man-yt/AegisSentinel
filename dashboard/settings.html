@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AEGIS | System Settings</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <style>
+        .settings-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .settings-section {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.9));
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .settings-section h2 {
+            color: #3B82F6;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .setting-item:last-child {
+            border-bottom: none;
+        }
+
+        .setting-label {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .setting-label h3 {
+            color: #E2E8F0;
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .setting-label p {
+            color: #94A3B8;
+            font-size: 0.875rem;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            cursor: pointer;
+            transition: background 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .toggle-switch.active {
+            background: linear-gradient(90deg, #3B82F6, #2563EB);
+        }
+
+        .toggle-slider {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 22px;
+            height: 22px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .toggle-switch.active .toggle-slider {
+            transform: translateX(30px);
+        }
+
+        .setting-input {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            color: #E2E8F0;
+            font-size: 0.875rem;
+            width: 200px;
+            transition: all 0.3s;
+        }
+
+        .setting-input:focus {
+            outline: none;
+            border-color: #3B82F6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .setting-select {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            color: #E2E8F0;
+            font-size: 0.875rem;
+            width: 200px;
+            cursor: pointer;
+        }
+
+        .save-btn {
+            background: linear-gradient(90deg, #3B82F6, #2563EB);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 0.75rem 2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+
+        .save-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+        }
+
+        .danger-btn {
+            background: linear-gradient(90deg, #EF4444, #DC2626);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 0.75rem 2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .danger-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .success-message {
+            background: rgba(34, 197, 94, 0.2);
+            border: 1px solid #22C55E;
+            color: #22C55E;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .info-box {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+
+        .info-box p {
+            color: #94A3B8;
+            font-size: 0.875rem;
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body class="premium-theme">
+    <!-- Cursor Trail Container -->
+    <div id="cursor-trail-container"></div>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <nav class="header-nav">
+                <a href="index.html" class="nav-link">DASHBOARD</a>
+                <a href="all-alerts.html" class="nav-link">ALERTS</a>
+                <a href="settings.html" class="nav-link active">SETTINGS</a>
+            </nav>
+        </div>
+
+        <div class="header-center">
+            <h1 class="aegis-title">AEGIS</h1>
+        </div>
+
+        <div class="header-right">
+            <div class="premium-logo-container">
+                <div class="glass-bg"></div>
+                <svg width="40" height="40" viewBox="0 0 32 32" fill="none" class="aegis-shield-logo">
+                    <path d="M16 2L4 8V16C4 23.732 9.268 30 16 30C22.732 30 28 23.732 28 16V8L16 2Z"
+                        fill="url(#premiumShieldGradient)" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" />
+                    <defs>
+                        <linearGradient id="premiumShieldGradient" x1="16" y1="2" x2="16" y2="30"
+                            gradientUnits="userSpaceOnUse">
+                            <stop offset="0%" stop-color="#3B82F6" />
+                            <stop offset="50%" stop-color="#1D4ED8" />
+                            <stop offset="100%" stop-color="#000000" />
+                        </linearGradient>
+                    </defs>
+                    <path d="M12 16L15 19L20 13" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+                <div class="logo-glow"></div>
+            </div>
+            <button class="icon-btn" id="loginIcon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                    <circle cx="12" cy="7" r="4" />
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="settings-container">
+            <!-- Title -->
+            <div class="title-section" style="margin-bottom: 2rem;">
+                <h2 class="main-title">SYSTEM CONFIG</h2>
+                <p class="subtitle">PROJECT AEGIS: SECURE PROTOCOL PREFERENCES</p>
+            </div>
+
+            <div id="successMessage" class="success-message">
+                Settings saved successfully!
+            </div>
+
+            <!-- Security Settings -->
+            <div class="settings-section">
+                <h2>🛡️ Security Settings</h2>
+
+                <div class="setting-item">
+                    <div class="setting-label">
+                        <h3>Real-time Threat Detection</h3>
+                        <p>Enable continuous monitoring for prompt injection attacks</p>
+                    </div>
+                    <div class="toggle-switch active" data-setting="realtime">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-label">
+                        <h3>Auto-block Suspicious Requests</h3>
+                        <p>Automatically block requests flagged as high-risk</p>
+                    </div>
+                    <div class="toggle-switch active" data-setting="autoblock">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-label">
+                        <h3>Threat Severity Threshold</h3>
+                        <p>Minimum threat level to trigger alerts</p>
+                    </div>
+                    <select class="setting-select" id="threatThreshold">
+                        <option value="low">Low</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="high">High</option>
+                        <option value="critical">Critical</option>
+                    </select>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-label">
+                        <h3>Max Login Attempts</h3>
+                        <p>Number of failed login attempts before lockout</p>
+                    </div>
+                    <input type="number" class="setting-input" id="maxLoginAttempts" value="5" min="3" max="10">
+                </div>
+            </div>
+
+            <!-- Monitoring Settings -->
+            <div class="settings-section">
+                <h2>📊 Monitoring Settings</h2>
+
+                <div class="setting-item">
+                    <div class="setting-label">
+                        <h3>Log All Requests</h3>
+                        <p>Store all API requests for audit trail</p>
+                    </div>
+                    <div class="toggle-switch active" data-setting="logging">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-label">
+                        <h3>Data Retention Period</h3>
+                        <p>How long to keep logs and analytics data</p>
+                    </div>
+                    <select class="setting-select" id="retentionPeriod">
+                        <option value="7">7 days</option>
+                        <option value="30" selected>30 days</option>
+                        <option value="90">90 days</option>
+                        <option value="365">1 year</option>
+                    </select>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-label">
+                        <h3>Export Format</h3>
+                        <p>Default format for data exports</p>
+                    </div>
+                    <select class="setting-select" id="exportFormat">
+                        <option value="json" selected>JSON</option>
+                        <option value="csv">CSV</option>
+                        <option value="pdf">PDF</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Notification Settings -->
+            <div class="settings-section">
+                <h2>🔔 Notification Settings</h2>
+
+                <div class="setting-item">
+                    <div class="setting-label">
+                        <h3>Email Alerts</h3>
+                        <p>Receive email notifications for critical threats</p>
+                    </div>
+                    <div class="toggle-switch" data-setting="emailAlerts">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-label">
+                        <h3>Alert Email</h3>
+                        <p>Email address for security notifications</p>
+                    </div>
+                    <input type="email" class="setting-input" id="alertEmail" placeholder="admin@example.com">
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-label">
+                        <h3>Dashboard Refresh Rate</h3>
+                        <p>How often to update dashboard metrics</p>
+                    </div>
+                    <select class="setting-select" id="refreshRate">
+                        <option value="5">5 seconds</option>
+                        <option value="10" selected>10 seconds</option>
+                        <option value="30">30 seconds</option>
+                        <option value="60">1 minute</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- API Settings -->
+            <div class="settings-section">
+                <h2>🔌 API Configuration</h2>
+
+                <div class="setting-item">
+                    <div class="setting-label">
+                        <h3>API Endpoint</h3>
+                        <p>Backend authentication API URL</p>
+                    </div>
+                    <input type="text" class="setting-input" id="apiEndpoint" value="http://localhost:8000"
+                        style="width: 400px;">
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-label">
+                        <h3>Rate Limiting</h3>
+                        <p>Enable API rate limiting protection</p>
+                    </div>
+                    <div class="toggle-switch active" data-setting="rateLimiting">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <p><strong>ℹ️ Note:</strong> Changes to API settings will take effect immediately. Ensure your
+                        backend server is configured correctly before updating.</p>
+                </div>
+            </div>
+
+            <!-- Danger Zone -->
+            <div class="settings-section" style="border-color: rgba(239, 68, 68, 0.3);">
+                <h2 style="color: #EF4444;">⚠️ Danger Zone</h2>
+
+                <div class="setting-item">
+                    <div class="setting-label">
+                        <h3>Clear All Logs</h3>
+                        <p>Delete all stored security logs and analytics data</p>
+                    </div>
+                    <button class="danger-btn" onclick="clearLogs()">Clear Logs</button>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-label">
+                        <h3>Reset to Defaults</h3>
+                        <p>Restore all settings to factory defaults</p>
+                    </div>
+                    <button class="danger-btn" onclick="resetSettings()">Reset All</button>
+                </div>
+            </div>
+
+            <!-- Save Button -->
+            <div class="button-group">
+                <button class="save-btn" onclick="saveSettings()">💾 Save Changes</button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Toggle switches functionality
+        document.querySelectorAll('.toggle-switch').forEach(toggle => {
+            toggle.addEventListener('click', function () {
+                this.classList.toggle('active');
+            });
+        });
+
+        // Save settings function
+        function saveSettings() {
+            const settings = {
+                realtime: document.querySelector('[data-setting="realtime"]').classList.contains('active'),
+                autoblock: document.querySelector('[data-setting="autoblock"]').classList.contains('active'),
+                threatThreshold: document.getElementById('threatThreshold').value,
+                maxLoginAttempts: document.getElementById('maxLoginAttempts').value,
+                logging: document.querySelector('[data-setting="logging"]').classList.contains('active'),
+                retentionPeriod: document.getElementById('retentionPeriod').value,
+                exportFormat: document.getElementById('exportFormat').value,
+                emailAlerts: document.querySelector('[data-setting="emailAlerts"]').classList.contains('active'),
+                alertEmail: document.getElementById('alertEmail').value,
+                refreshRate: document.getElementById('refreshRate').value,
+                apiEndpoint: document.getElementById('apiEndpoint').value,
+                rateLimiting: document.querySelector('[data-setting="rateLimiting"]').classList.contains('active')
+            };
+
+            // Save to localStorage
+            localStorage.setItem('genai_sentinel_settings', JSON.stringify(settings));
+
+            // Show success message
+            const successMsg = document.getElementById('successMessage');
+            successMsg.style.display = 'block';
+            setTimeout(() => {
+                successMsg.style.display = 'none';
+            }, 3000);
+        }
+
+        // Clear logs function
+        function clearLogs() {
+            if (confirm('Are you sure you want to clear all logs? This action cannot be undone.')) {
+                // Clear logs logic here
+                alert('All logs have been cleared.');
+            }
+        }
+
+        // Reset settings function
+        function resetSettings() {
+            if (confirm('Are you sure you want to reset all settings to defaults? This action cannot be undone.')) {
+                localStorage.removeItem('genai_sentinel_settings');
+                location.reload();
+            }
+        }
+
+        // Load saved settings on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            const saved = localStorage.getItem('genai_sentinel_settings');
+            if (saved) {
+                const settings = JSON.parse(saved);
+
+                // Apply saved settings
+                if (settings.realtime !== undefined) {
+                    document.querySelector('[data-setting="realtime"]').classList.toggle('active', settings.realtime);
+                }
+                if (settings.autoblock !== undefined) {
+                    document.querySelector('[data-setting="autoblock"]').classList.toggle('active', settings.autoblock);
+                }
+                if (settings.threatThreshold) {
+                    document.getElementById('threatThreshold').value = settings.threatThreshold;
+                }
+                if (settings.maxLoginAttempts) {
+                    document.getElementById('maxLoginAttempts').value = settings.maxLoginAttempts;
+                }
+                if (settings.alertEmail) {
+                    document.getElementById('alertEmail').value = settings.alertEmail;
+                }
+                if (settings.apiEndpoint) {
+                    document.getElementById('apiEndpoint').value = settings.apiEndpoint;
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

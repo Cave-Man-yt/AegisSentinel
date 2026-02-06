@@ -3,16 +3,13 @@ import threading
 import time
 from pathlib import Path
 
-# Use absolute path to ensure logs are found regardless of CWD
-LOG_FILE = Path("/home/socks/Documents/AegisSentinal/security_events.json")
+# Use absolute path for logs to avoid CWD issues
+LOG_FILE = Path("/home/socks/Documents/AegisSentinal/logs/security_events.json")
 LOG_LOCK = threading.Lock()
 
 def log_security_event(event_data: dict):
     """
-    Logs a security event to the JSON log file in a thread-safe manner.
-    
-    Args:
-        event_data: Dictionary containing event details.
+    Logs a security event to the JSONL log file (Line-delimited JSON).
     """
     # Ensure timestamp exists
     if "timestamp" not in event_data:
@@ -20,21 +17,7 @@ def log_security_event(event_data: dict):
 
     with LOG_LOCK:
         try:
-            if LOG_FILE.exists() and LOG_FILE.stat().st_size > 0:
-                with open(LOG_FILE, "r") as f:
-                    try:
-                        logs = json.load(f)
-                    except json.JSONDecodeError:
-                        logs = []
-            else:
-                logs = []
-            
-            # Prepend new event to keep latest at top if desired, 
-            # or append. Dashboard usually reads all. Let's append.
-            logs.append(event_data)
-            
-            with open(LOG_FILE, "w") as f:
-                json.dump(logs, f, indent=2)
-                
+            with open(LOG_FILE, "a") as f:
+                f.write(json.dumps(event_data) + "\n")
         except Exception as e:
             print(f"Error logging security event: {e}")

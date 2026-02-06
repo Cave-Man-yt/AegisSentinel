@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AEGIS | Ultra-Premium Security Analytics</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="alerts.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script
+        src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/topojson@3"></script>
+</head>
+
+<body class="premium-theme">
+    <!-- Cursor Trail Container -->
+    <div id="cursor-trail-container"></div>
+    <!-- Header -->
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <nav class="header-nav">
+                <a href="index.html" class="nav-link active">DASHBOARD</a>
+                <a href="all-alerts.html" class="nav-link">ALERTS</a>
+            </nav>
+        </div>
+
+        <div class="header-center">
+            <h1 class="aegis-title">AEGIS</h1>
+        </div>
+
+        <div class="header-right">
+            <div class="premium-logo-container">
+                <div class="glass-bg"></div>
+                <svg width="40" height="40" viewBox="0 0 32 32" fill="none" class="aegis-shield-logo">
+                    <path d="M16 2L4 8V16C4 23.732 9.268 30 16 30C22.732 30 28 23.732 28 16V8L16 2Z"
+                        fill="url(#premiumShieldGradient)" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" />
+                    <defs>
+                        <linearGradient id="premiumShieldGradient" x1="16" y1="2" x2="16" y2="30"
+                            gradientUnits="userSpaceOnUse">
+                            <stop offset="0%" stop-color="#3B82F6" />
+                            <stop offset="50%" stop-color="#1D4ED8" />
+                            <stop offset="100%" stop-color="#000000" />
+                        </linearGradient>
+                    </defs>
+                    <path d="M12 16L15 19L20 13" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+                <div class="logo-glow"></div>
+            </div>
+            <button class="icon-btn" id="loginIcon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                    <circle cx="12" cy="7" r="4" />
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Title Section -->
+        <div class="title-section">
+            <div class="title-left">
+                <h2 class="main-title">ANALYTICS COMMAND</h2>
+                <p class="subtitle">PROJECT AEGIS: SECURE PROTOCOL ACTIVE</p>
+            </div>
+            <div class="title-right">
+                <div class="live-indicator">
+                    <div class="live-dot"></div>
+                    SYSTEM STATE: STABLE
+                </div>
+                <button class="export-btn btn-primary">GENERATE REPORT</button>
+            </div>
+        </div>
+
+
+
+        <!-- Metrics Cards -->
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-header">
+                    <span class="metric-label">TOTAL REQUESTS</span>
+                    <div class="metric-icon spinning">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path
+                                d="M12 2V6M12 18V22M6 12H2M22 12H18M19.07 19.07L16.24 16.24M19.07 4.93L16.24 7.76M4.93 19.07L7.76 16.24M4.93 4.93L7.76 7.76"
+                                stroke="#3B82F6" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="metric-value" data-target="1200000">0</div>
+                <div class="metric-trend positive">
+                    <span>^</span> 5.2%
+                </div>
+                <div class="metric-description">Total requests processed</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-header">
+                    <span class="metric-label">THREATS BLOCKED</span>
+                    <div class="metric-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 2L4 7V12C4 17.523 7.582 22.442 12 23C16.418 22.442 20 17.523 20 12V7L12 2Z"
+                                fill="#EF4444" stroke="#DC2626" stroke-width="2" />
+                            <path d="M9 12L11 14L15 10" stroke="white" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="metric-value">0</div>
+                <div class="metric-trend neutral">
+                    <span>-</span> 0.0%
+                </div>
+                <div class="metric-description">Waiting for data...</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-header">
+                    <span class="metric-label">AVG LATENCY ADDED</span>
+                    <div class="metric-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <circle cx="12" cy="12" r="10" stroke="#F97316" stroke-width="2" />
+                            <path d="M12 6V12L16 14" stroke="#F97316" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="metric-value">0</div>
+                <span class="metric-unit">ms</span>
+                <div class="metric-trend neutral">
+                    <span>-</span> 0.0%
+                </div>
+                <div class="metric-description">Waiting for data...</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-header">
+                    <span class="metric-label">TOP THREAT VECTOR</span>
+                    <div class="metric-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path
+                                d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2Z"
+                                fill="#A855F7" stroke="#9333EA" stroke-width="2" />
+                            <circle cx="12" cy="9" r="3" fill="white" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="metric-value-text">None</div>
+                <div class="metric-trend neutral">
+                    <span>-</span>
+                </div>
+                <div class="metric-description">No threats detected</div>
+            </div>
+        </div>
+
+        <!-- Charts Grid -->
+        <div class="charts-grid">
+            <!-- Prompt Injection Alerts -->
+            <div class="chart-card large">
+                <div class="chart-header">
+                    <h3 class="chart-title">🚨 Prompt Injection Alerts - Real Time</h3>
+                    <div class="live-indicator" style="margin-left: auto;">
+                        <span class="live-dot"></span>
+                        <span>Live</span>
+                    </div>
+                </div>
+                <div class="alerts-container">
+                    <table class="alerts-table">
+                        <thead>
+                            <tr>
+                                <th>Timestamp</th>
+                                <th>Attack Type</th>
+                                <th>Severity</th>
+                                <th>Prompt Preview</th>
+                                <th>Source IP</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="alertsBody">
+                            <!-- Populated dynamically from database -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="alerts-footer">
+                    <span>Showing latest 5 alerts</span>
+                    <a href="all-alerts.html" class="view-details-link">View All Alerts →</a>
+                </div>
+            </div>
+
+            <!-- Threat Distribution -->
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3 class="chart-title">Threat Distribution</h3>
+                </div>
+                <div class="chart-container">
+                    <canvas id="threatChart"></canvas>
+                </div>
+                <div class="chart-legend">
+                    <div class="legend-item">
+                        <span class="legend-dot" style="background: #EF4444;"></span>
+                        <span>DAN Attacks</span>
+                        <span class="legend-value">0%</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-dot" style="background: #F97316;"></span>
+                        <span>Roleplay</span>
+                        <span class="legend-value">0%</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-dot" style="background: #EAB308;"></span>
+                        <span>Obfuscation</span>
+                        <span class="legend-value">0%</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-dot" style="background: #3B82F6;"></span>
+                        <span>Injection</span>
+                        <span class="legend-value">0%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Latency Impact Analysis -->
+            <div class="chart-card large">
+                <div class="chart-header">
+                    <h3 class="chart-title">Latency Impact Analysis</h3>
+                    <p class="chart-subtitle">Comparison of native response vs secured response.</p>
+                </div>
+                <div class="chart-container">
+                    <canvas id="latencyChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Cyberpunk Login Modal -->
+    <div id="loginModal" class="login-modal">
+        <div class="login-container">
+            <div class="cyberpunk-border">
+                <div class="login-content">
+                    <div class="login-header">
+                        <div class="cyberpunk-logo">
+                            <svg width="48" height="48" viewBox="0 0 32 32" fill="none">
+                                <path d="M16 2L4 8V16C4 23.732 9.268 30 16 30C22.732 30 28 23.732 28 16V8L16 2Z"
+                                    fill="url(#shieldGradient)" stroke="#00FFFF" stroke-width="2" />
+                                <defs>
+                                    <linearGradient id="shieldGradient" x1="16" y1="2" x2="16" y2="30"
+                                        gradientUnits="userSpaceOnUse">
+                                        <stop offset="0%" stop-color="#00FFFF" />
+                                        <stop offset="100%" stop-color="#FF00FF" />
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                        </div>
+                        <h2 class="cyberpunk-title">GENAI SENTINEL</h2>
+                        <p class="cyberpunk-subtitle">SECURE ACCESS PROTOCOL</p>
+                    </div>
+
+                    <form id="loginForm" class="login-form">
+                        <div class="input-group">
+                            <label class="cyberpunk-label">USERNAME</label>
+                            <input type="text" id="username" class="cyberpunk-input" placeholder="ENTER USERNAME"
+                                required>
+                            <div class="input-glow"></div>
+                        </div>
+
+                        <div class="input-group">
+                            <label class="cyberpunk-label">PASSWORD</label>
+                            <input type="password" id="password" class="cyberpunk-input" placeholder="ENTER PASSWORD"
+                                required>
+                            <div class="input-glow"></div>
+                        </div>
+
+                        <div class="error-message" id="errorMessage"></div>
+
+                        <button type="submit" class="cyberpunk-button">
+                            <span>ACCESS GRANTED</span>
+                            <div class="button-glow"></div>
+                        </button>
+                    </form>
+
+                    <div class="cyberpunk-footer">
+                        <div class="scan-line"></div>
+                        <p>SYSTEM STATUS: <span class="status-online">ONLINE</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <link rel="stylesheet" href="login-errors.css">
+    <script src="script.js"></script>
+    <script src="login.js"></script>
+    <script src="latency-metrics.js"></script>
+    <script src="security-metrics.js"></script>
+</body>
+
+</html>

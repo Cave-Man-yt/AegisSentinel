@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AEGIS | Secure Alert Logs</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="alerts.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <style>
+        .alerts-page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .filters-bar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 300px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: #E2E8F0;
+            font-size: 0.875rem;
+            transition: all 0.3s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #3B82F6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94A3B8;
+        }
+
+        .filter-dropdown {
+            padding: 0.75rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: #E2E8F0;
+            font-size: 0.875rem;
+            cursor: pointer;
+            min-width: 150px;
+        }
+
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.9));
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+        }
+
+        .stat-label {
+            color: #94A3B8;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            color: #E2E8F0;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+        }
+
+        .page-btn {
+            padding: 0.5rem 1rem;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 6px;
+            color: #3B82F6;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .page-btn:hover {
+            background: rgba(59, 130, 246, 0.2);
+        }
+
+        .page-btn.active {
+            background: #3B82F6;
+            color: white;
+        }
+
+        .page-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .export-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .export-btn-small {
+            padding: 0.5rem 1rem;
+            background: linear-gradient(90deg, #3B82F6, #2563EB);
+            border: none;
+            border-radius: 6px;
+            color: white;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .export-btn-small:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+
+        .alert-detail-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.98), rgba(30, 41, 59, 0.95));
+            border: 2px solid rgba(59, 130, 246, 0.5);
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 800px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: #94A3B8;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: 150px 1fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .detail-label {
+            color: #94A3B8;
+            font-weight: 600;
+        }
+
+        .detail-value {
+            color: #E2E8F0;
+            word-break: break-word;
+        }
+
+        .full-prompt {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1rem;
+            border-radius: 6px;
+            border-left: 3px solid #3B82F6;
+            font-family: 'Courier New', monospace;
+            color: #CBD5E1;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+
+<body class="premium-theme">
+    <!-- Cursor Trail Container -->
+    <div id="cursor-trail-container"></div>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <nav class="header-nav">
+                <a href="index.html" class="nav-link">DASHBOARD</a>
+                <a href="all-alerts.html" class="nav-link active">ALERTS</a>
+            </nav>
+        </div>
+
+        <div class="header-center">
+            <h1 class="aegis-title">AEGIS</h1>
+        </div>
+
+        <div class="header-right">
+            <div class="premium-logo-container">
+                <div class="glass-bg"></div>
+                <svg width="40" height="40" viewBox="0 0 32 32" fill="none" class="aegis-shield-logo">
+                    <path d="M16 2L4 8V16C4 23.732 9.268 30 16 30C22.732 30 28 23.732 28 16V8L16 2Z"
+                        fill="url(#premiumShieldGradient)" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" />
+                    <defs>
+                        <linearGradient id="premiumShieldGradient" x1="16" y1="2" x2="16" y2="30"
+                            gradientUnits="userSpaceOnUse">
+                            <stop offset="0%" stop-color="#3B82F6" />
+                            <stop offset="50%" stop-color="#1D4ED8" />
+                            <stop offset="100%" stop-color="#000000" />
+                        </linearGradient>
+                    </defs>
+                    <path d="M12 16L15 19L20 13" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+                <div class="logo-glow"></div>
+            </div>
+            <button class="icon-btn" id="loginIcon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                    <circle cx="12" cy="7" r="4" />
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Page Header -->
+        <div class="alerts-page-header">
+            <div>
+                <h2 class="main-title">THREAT INTELLIGENCE LOGS</h2>
+                <p class="subtitle">PROJECT AEGIS: ALL SECURITY EVENTS</p>
+            </div>
+        </div>
+
+        <!-- Stats Bar -->
+        <div class="stats-bar">
+            <div class="stat-card">
+                <div class="stat-label">Total Alerts</div>
+                <div class="stat-value">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Critical</div>
+                <div class="stat-value" style="color: #EF4444;">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">High</div>
+                <div class="stat-value" style="color: #F97316;">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Blocked</div>
+                <div class="stat-value" style="color: #22C55E;">0</div>
+            </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="filters-bar">
+            <div class="search-box">
+                <svg class="search-icon" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path
+                        d="M7 12C9.76142 12 12 9.76142 12 7C12 4.23858 9.76142 2 7 2C4.23858 2 2 4.23858 2 7C2 9.76142 4.23858 12 7 12Z"
+                        stroke="currentColor" stroke-width="1.5" />
+                    <path d="M11 11L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                </svg>
+                <input type="text" class="search-input" placeholder="Search by prompt, IP, or attack type..."
+                    id="searchInput">
+            </div>
+            <select class="filter-dropdown" id="severityFilter">
+                <option value="">All Severities</option>
+                <option value="critical">Critical</option>
+                <option value="high">High</option>
+                <option value="medium">Medium</option>
+                <option value="low">Low</option>
+            </select>
+            <select class="filter-dropdown" id="typeFilter">
+                <option value="">All Attack Types</option>
+                <option value="DAN Attacks">DAN Attacks</option>
+                <option value="Jailbreak">Jailbreak</option>
+                <option value="Roleplay">Roleplay</option>
+                <option value="Obfuscation">Obfuscation</option>
+                <option value="System Prompt Leak">System Prompt Leak</option>
+                <option value="Direct Injection">Direct Injection</option>
+            </select>
+            <select class="filter-dropdown" id="statusFilter">
+                <option value="">All Status</option>
+                <option value="blocked">Blocked</option>
+                <option value="flagged">Flagged</option>
+            </select>
+            <select class="filter-dropdown" id="timeFilter">
+                <option value="">All Time</option>
+                <option value="1h">Last Hour</option>
+                <option value="24h">Last 24 Hours</option>
+                <option value="7d">Last 7 Days</option>
+                <option value="30d">Last 30 Days</option>
+            </select>
+        </div>
+
+        <!-- Alerts Table -->
+        <div class="chart-card large">
+            <div class="alerts-container">
+                <table class="alerts-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Timestamp</th>
+                            <th>Attack Type</th>
+                            <th>Severity</th>
+                            <th>Prompt Preview</th>
+                            <th>Source IP</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="allAlertsBody">
+                        <!-- Populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination">
+                <button class="page-btn" onclick="changePage(-1)" id="prevBtn">← Previous</button>
+                <span class="page-btn active" id="pageInfo">Page 1 of 25</span>
+                <button class="page-btn" onclick="changePage(1)" id="nextBtn">Next →</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Alert Detail Modal -->
+    <div id="alertModal" class="alert-detail-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 style="color: #E2E8F0;">Alert Details</h2>
+                <button class="close-btn" onclick="closeModal()">×</button>
+            </div>
+            <div id="modalBody">
+                <!-- Populated dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <link rel="stylesheet" href="login-errors.css">
+    <script src="script.js"></script>
+    <script src="login.js"></script>
+    <script src="all-alerts.js"></script>
+</body>
+
+</html>

@@ -5,3 +5,5 @@ torch
 optimum[onnxruntime]
 llm-guard
 fastmcp
+fastapi
+uvicorn

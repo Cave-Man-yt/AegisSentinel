@@ -1,85 +1,91 @@
-# AegisSentinel: Enterprise-Grade GenAI Security Gateway (MCP)
+# 🛡️ AegisSentinel: Enterprise GenAI Defense System
 
-**AegisSentinel** is a production-ready Model Context Protocol (MCP) server designed to secure Generative AI pipelines against Prompt Injection, Jailbreaks, and PII leakage. It implements a **Defense-in-Depth** architecture compliant with the *2026 Enterprise Anti-Prompt Injection Defense Framework*.
+> **A fortress for your LLMs.** AegisSentinel is a production-grade Model Context Protocol (MCP) server that sits between your users and your Large Language Models (LLMs), filtering malicious inputs, preventing data leakage, and ensuring compliance.
 
-## 🛡️ Key Features
+![Architecture Diagram](Images/archDiagram.jpeg)
 
--   **Hybrid Input Defense (Layer 1-3)**:
-    -   **Heuristic Firewall**: Deterministic blocking of known jailbreaks (e.g., "DAN", "Mongo Tom") using externalized signatures (`jailbreak_signatures.json`).
-    -   **Semantic Scan**: Zero-Shot Classification (`BanTopics`) to detect "Social Engineering" and "Persona Adoption" attempts.
-    -   **Structural Injection Model**: `ProtectAI/DeBERTa-v3` model to detect instruction overrides.
--   **Context-Aware Privacy (Layer 4)**:
-    -   **PII Redaction**: Automatically sanitizes names, phones, and passwords using `Anonymize` + `Presidio`.
-    -   **Context Intelligence**: Distinguishes between business data (e.g., `TRK-1234`) and sensitive PII.
--   **Enterprise Risk Scoring**:
-    -   Zero-Tolerance logic: `Risk = max(Heuristic ? 100 : 0, Model * 100)`.
--   **Output Scanning**:
-    -   Dedicated `secure_output_scanner` tool to redact PII from LLM-generated responses before they reach the user.
+---
 
-## 🚀 Installation & Setup
+## 🚀 Evolution: MVP vs. AegisSentinel
 
-### Prerequisites
--   Python 3.10+
--   `uv` or `pip`
+This project is a massive evolution from the original POC.
 
-### 1. Clone & Install
+| Feature | [MVP (PromptCheckMCP)](https://github.com/Cave-Man-yt/PromptCheckMCP) | **AegisSentinel (This Project)** |
+| :--- | :--- | :--- |
+| **Architecture** | Simple Python Script | **FastMCP Server** with Modular architecture |
+| **Detection** | Basic String Matching | **Multi-Layered Defense** (Heuristic + Deep Learning + PII) |
+| **Models** | None (Regex only) | **Ensemble of DeBERTa-v3 Models** (Zero-Shot + Injection Specific) |
+| **Visibility** | Console Logs | **Real-time Cyberpunk Dashboard** (Web UI) |
+| **Configuration** | Hardcoded | **Externalized Policy** (`config.yaml`, `jailbreak_signatures.json`) |
+| **Response** | Exception / Crash | **Structured Security Events** (JSON) |
+
+---
+
+## 🏗️ Architecture & Security Layers
+
+AegisSentinel employs a **Defense-in-Depth** strategy, ensuring that if one layer fails, another catches the threat.
+
+### 1. The Heuristic Firewall (Layer 1)
+*   **Mechanism**: High-speed regex and substring matching against known signatures.
+*   **Purpose**: Instantly blocks known jailbreaks (e.g., "DAN", "Developer Mode") and obvious attacks with zero latency penalty.
+*   **Config**: Managed via `config/jailbreak_signatures.json`.
+
+### 2. The Semantic Neural Engine (Layer 2)
+*   **Mechanism**: Deep Learning models analyze the *intent* of the prompt, not just keywords.
+*   **Models Used**:
+    *   **Zero-Shot Detection**: Uses `MoritzLaurer/DeBERTa-v3-base-mnli-fever-anli`. This model is capable of understanding concepts like "Social Engineering" or "Emotional Blackmail" without specific training on those exact phrases.
+    *   **Injection Specific**: Uses `protectai/deberta-v3-base-prompt-injection`. A specialized model fine-tuned specifically to detect structural prompt injection attacks.
+*   **How DeBERTa Works**: DeBERTa (Decoding-enhanced BERT with disentangled attention) improves upon BERT by representing words and their positions separately. This allows it to understand the subtle context of a sentence better than standard transformers, making it highly effective at distinguishing between a user asking *about* a hack vs. *attempting* a hack.
+
+### 3. The PII Privacy Vault (Layer 3)
+*   **Mechanism**: Context-aware Entity Recognition (NER) + Regex.
+*   **Purpose**: Detects and redacts sensitive data (Names, Phone Numbers, Database Credentials) *before* it leaves the secure enclave.
+*   **Models**: Microsoft Presidio + Custom Regex Patterns.
+
+### 4. The Risk Engine (Layer 4)
+*   **Mechanism**: A normalization algorithm that aggregates scores from all layers.
+*   **Logic**:
+    *   **Heuristic Match**: Risk Score = **100** (Immediate Block).
+    *   **Model Detection**: Risk Score = Model Confidence % (e.g., 0.98 -> 98).
+    *   **PII Found**: Adds baseline risk (20).
+    *   **Final Score**: `Max(Heuristic, Model, PII)`.
+    *   **Threshold**: Any request with a Risk Score ≥ **80** is dropped.
+
+---
+
+## 📊 Datasets & Training
+
+The intelligence behind AegisSentinel comes from robust datasets used to train the underlying models:
+
+*   **NLI Datasets (MNLI, FEVER, ANLI)**: Used for the Zero-Shot classifier to understand logical relationships and intent.
+*   **Deepset Prompt Injections**: A curated dataset of thousands of adversarial prompts used to train the injection-specific model.
+*   **WikiText & CommonCrawl**: Foundation datasets for the DeBERTa-v3 base model.
+
+---
+
+## 🖥️ Dashboard & Monitoring
+
+Includes a standalone **Security Operations Center (SOC) Dashboard**:
+*   **Live Threat Map**: Visualizes attack origins (simulated).
+*   **Real-time Metrics**: Latency impact, Block rates, and RPM.
+*   **Incident Log**: Detailed breakdown of every blocked attempt with full forensic data.
+
+### Running the Dashboard
 ```bash
-git clone https://github.com/your-org/AegisSentinel.git
-cd AegisSentinel
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
+./venv/bin/python scripts/dashboard_server.py
 ```
+Access at: `http://localhost:8000`
 
-### 2. Configuration
-Edit `config.yaml` to defend against specific threats:
-```yaml
-risk_threshold: 80
-pii:
-  allowed_names: ["CompanyBot", "Support"] # Whitelist entities
-```
-Edit `jailbreak_signatures.json` to add new blocklist rules dynamically.
+---
 
-### 3. Run the Server
+## 🛠️ Usage
+
+### Start the Server
 ```bash
-./start.sh
+./scripts/start.sh
 ```
 
-## 🖥️ Usage
-
-### MCP Tools
-AegisSentinel exposes two primary tools to your agent:
-
-1.  **`secure_prompt_gateway(user_prompt: str)`**:
-    -   Call this *before* processing any user input.
-    -   Returns: JSON with `status` ("SAFE" / "BLOCKED") and `risk_score`.
-    -   **Effect**: Raises a `ValueError` if blocked, forcibly stopping the agent.
-
-2.  **`secure_output_scanner(model_response: str)`**:
-    -   Call this *after* generating a response.
-    -   Returns: Redacted string (e.g., "My password is [REDACTED_DB_PASSWORD]").
-
-### Streamlit UI (Coming Soon)
-We are integrating a Streamlit-based Admin Dashboard to visualize:
--   Real-time Risk Scores.
--   Attack Vectors (Jailbreak vs. Injection).
--   PII Redaction logs.
-*(Code to be added shortly)*
-
-## 📊 Architecture
-
-```mermaid
-graph TD
-    User[User Input] --> Heuristic[Heuristic Firewall<br/>(Signatures)]
-    Heuristic -->|Blocked| Log[Security Log]
-    Heuristic -->|Safe| Model[DeBERTa Semantic Scan]
-    Model -->|High Risk| Log
-    Model -->|Safe| PII[PII Redaction Layer]
-    PII --> Agent[GenAI Agent]
-    Agent --> Output[LLM Output]
-    Output --> OutputScan[Output Scanner]
-    OutputScan --> Final[User Response]
+### Connect with Inspector
+```bash
+npx @modelcontextprotocol/inspector ./scripts/start.sh
 ```
-
-## 🔒 Security Policy
-Reliable security requires **layers**. Do not rely solely on the AI model. Keep `jailbreak_signatures.json` updated with the latest community findings (e.g., from JailbreakChat).

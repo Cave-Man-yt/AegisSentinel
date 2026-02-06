@@ -1,0 +1,193 @@
+/* Alerts Table Styling */
+.alerts-container {
+    overflow-x: auto;
+    margin: 1rem 0;
+}
+
+.alerts-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+}
+
+.alerts-table thead {
+    background: rgba(59, 130, 246, 0.1);
+    border-bottom: 2px solid rgba(59, 130, 246, 0.3);
+}
+
+.alerts-table th {
+    padding: 1rem;
+    text-align: left;
+    color: #94A3B8;
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.alerts-table tbody tr {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.alerts-table tbody tr:hover {
+    background: rgba(59, 130, 246, 0.05);
+    transform: translateX(4px);
+}
+
+.alerts-table td {
+    padding: 1rem;
+    color: #E2E8F0;
+}
+
+/* Timestamp */
+.timestamp {
+    color: #94A3B8;
+    font-family: 'Courier New', monospace;
+    font-size: 0.8rem;
+}
+
+/* Attack Type Badges */
+.badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.badge-critical {
+    background: rgba(239, 68, 68, 0.2);
+    color: #FCA5A5;
+    border: 1px solid #EF4444;
+}
+
+.badge-high {
+    background: rgba(249, 115, 22, 0.2);
+    color: #FED7AA;
+    border: 1px solid #F97316;
+}
+
+.badge-medium {
+    background: rgba(234, 179, 8, 0.2);
+    color: #FDE047;
+    border: 1px solid #EAB308;
+}
+
+/* Severity Badges */
+.severity-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.severity-critical {
+    background: linear-gradient(90deg, #DC2626, #991B1B);
+    color: #FEE2E2;
+    box-shadow: 0 0 10px rgba(220, 38, 38, 0.5);
+    animation: pulse-critical 2s ease-in-out infinite;
+}
+
+.severity-high {
+    background: linear-gradient(90deg, #EA580C, #C2410C);
+    color: #FED7AA;
+}
+
+.severity-medium {
+    background: linear-gradient(90deg, #CA8A04, #A16207);
+    color: #FEF3C7;
+}
+
+@keyframes pulse-critical {
+
+    0%,
+    100% {
+        box-shadow: 0 0 10px rgba(220, 38, 38, 0.5);
+    }
+
+    50% {
+        box-shadow: 0 0 20px rgba(220, 38, 38, 0.8);
+    }
+}
+
+/* Prompt Preview */
+.prompt-preview {
+    max-width: 300px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: 'Courier New', monospace;
+    color: #CBD5E1;
+    font-size: 0.8rem;
+}
+
+/* Source IP */
+.source-ip {
+    font-family: 'Courier New', monospace;
+    color: #A5B4FC;
+}
+
+/* Status Badges */
+.status-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.status-blocked {
+    background: rgba(220, 38, 38, 0.2);
+    color: #FCA5A5;
+    border: 1px solid #DC2626;
+}
+
+.status-flagged {
+    background: rgba(234, 179, 8, 0.2);
+    color: #FDE047;
+    border: 1px solid #EAB308;
+}
+
+/* Alerts Footer */
+.alerts-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: #94A3B8;
+    font-size: 0.875rem;
+}
+
+/* Row animations for new alerts */
+@keyframes slide-in {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.alert-row {
+    animation: slide-in 0.5s ease-out;
+}
+
+/* Hover effects */
+.alerts-table tbody tr.severity-critical:hover {
+    background: rgba(239, 68, 68, 0.1);
+}
+
+.alerts-table tbody tr.severity-high:hover {
+    background: rgba(249, 115, 22, 0.1);
+}
+
+.alerts-table tbody tr.severity-medium:hover {
+    background: rgba(234, 179, 8, 0.1);
+}

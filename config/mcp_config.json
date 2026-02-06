@@ -1,0 +1,13 @@
+{
+    "serverUrl": "http://localhost:8000/sse",
+    "mcpServers": {
+        "aegis-sentinel": {
+            "command": "/home/socks/Documents/AegisSentinal/scripts/start.sh",
+            "args": [],
+            "env": {
+                "PYTHONPATH": "/home/socks/Documents/AegisSentinal"
+            },
+            "disabled": false
+        }
+    }
+}
