@@ -1,4 +1,7 @@
-fastmcp
+presidio-analyzer
+presidio-anonymizer
+transformers
+torch
+optimum[onnxruntime]
 llm-guard
-streamlit
-pandas
+fastmcp

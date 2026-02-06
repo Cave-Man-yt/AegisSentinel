@@ -1,0 +1,15 @@
+risk_threshold: 80
+injection_model:
+  model_name: "protectai/deberta-v3-base-prompt-injection"
+  use_onnx: true
+pii:
+  allowed_entities:
+    - TRACKING_ID
+  allowed_names:
+    - "Namwe"
+    - "Box"
+    - "User"
+    - "Name"
+    - "Password"
+    - "Phone"
+    - "Number"

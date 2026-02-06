@@ -1,0 +1,149 @@
+2026-02-06 09:09:30 [debug    ] Initialized classification ONNX model device=device(type='cpu') model=Model(path='protectai/deberta-v3-base-prompt-injection-v2', subfolder='', revision='89b085cd330414d3e7d9dd787870f315957e1e9f', onnx_path='ProtectAI/deberta-v3-base-prompt-injection-v2', onnx_revision='89b085cd330414d3e7d9dd787870f315957e1e9f', onnx_subfolder='onnx', onnx_filename='model.onnx', kwargs={}, pipeline_kwargs={'batch_size': 1, 'device': device(type='cpu'), 'return_token_type_ids': False, 'max_length': 512, 'truncation': True}, tokenizer_kwargs={})
+Device set to use cpu
+2026-02-06 09:09:30 [debug    ] Initialized NER model          device=device(type='cpu') model=Model(path='Isotonic/deberta-v3-base_finetuned_ai4privacy_v2', subfolder='', revision='9ea992753ab2686be4a8f64605ccc7be197ad794', onnx_path='Isotonic/deberta-v3-base_finetuned_ai4privacy_v2', onnx_revision='9ea992753ab2686be4a8f64605ccc7be197ad794', onnx_subfolder='onnx', onnx_filename='model.onnx', kwargs={}, pipeline_kwargs={'batch_size': 1, 'device': device(type='cpu'), 'aggregation_strategy': 'simple'}, tokenizer_kwargs={'model_input_names': ['input_ids', 'attention_mask']})
+Device set to use cpu
+2026-02-06 09:09:30 [debug    ] Loaded regex pattern           group_name=CREDIT_CARD_RE
+2026-02-06 09:09:30 [debug    ] Loaded regex pattern           group_name=UUID
+2026-02-06 09:09:30 [debug    ] Loaded regex pattern           group_name=EMAIL_ADDRESS_RE
+2026-02-06 09:09:30 [debug    ] Loaded regex pattern           group_name=US_SSN_RE
+2026-02-06 09:09:30 [debug    ] Loaded regex pattern           group_name=BTC_ADDRESS
+2026-02-06 09:09:30 [debug    ] Loaded regex pattern           group_name=URL_RE
+2026-02-06 09:09:30 [debug    ] Loaded regex pattern           group_name=CREDIT_CARD
+2026-02-06 09:09:30 [debug    ] Loaded regex pattern           group_name=EMAIL_ADDRESS_RE
+2026-02-06 09:09:30 [debug    ] Loaded regex pattern           group_name=PHONE_NUMBER_ZH
+2026-02-06 09:09:30 [debug    ] Loaded regex pattern           group_name=PHONE_NUMBER_WITH_EXT
+2026-02-06 09:09:30 [debug    ] Loaded regex pattern           group_name=DATE_RE
+2026-02-06 09:09:30 [debug    ] Loaded regex pattern           group_name=TIME_RE
+2026-02-06 09:09:30 [debug    ] Loaded regex pattern           group_name=HEX_COLOR
+2026-02-06 09:09:30 [debug    ] Loaded regex pattern           group_name=PRICE_RE
+2026-02-06 09:09:30 [debug    ] Loaded regex pattern           group_name=PO_BOX_RE
+2026-02-06 09:09:30 [debug    ] Loaded regex pattern           group_name=TRACKING_ID
+
+
+╭─────────────────────────╮
+│                         │
+│                         │
+│     ▄▀▀ ▄▀█ █▀▀ ▀█▀     │
+│     █▀  █▀█ ▄▄█  █      │
+│                         │
+│                         │
+│     FastMCP 2.14.5      │
+│    https://gofastmcp    │
+│    .com                 │
+│                         │
+│    🖥  Serve… FastMC…    │
+│    🚀 Deploy https:…    │
+│       free:             │
+│                         │
+╰─────────────────────────╯
+╭─────────────────────────╮
+│   ✨ FastMCP 3.0 is     │
+│   coming!               │
+│  Pin `fastmcp < 3` in   │
+│  production, then       │
+│  upgrade when you're    │
+│  ready.                 │
+╰─────────────────────────╯
+
+
+[02/06… INFO     S server.…
+09:09:…          t         
+                 a         
+                 r         
+                 t         
+                 i         
+                 n         
+                 g         
+                           
+                 M         
+                 C         
+                 P         
+                           
+                 s         
+                 e         
+                 r         
+                 v         
+                 e         
+                 r         
+                           
+                 '         
+                 F         
+                 a         
+                 s         
+                 t         
+                 M         
+                 C         
+                 P         
+                 -         
+                 0         
+                 e         
+                 6         
+                 4         
+                 '         
+                           
+                 w         
+                 i         
+                 t         
+                 h         
+                           
+                 t         
+                 r         
+                 a         
+                 n         
+                 s         
+                 p         
+                 o         
+                 r         
+                 t         
+                           
+                 '         
+                 s         
+                 s         
+                 e         
+                 '         
+                           
+                 o         
+                 n         
+                           
+                 h         
+                 t         
+                 t         
+                 p         
+                 :         
+                 /         
+                 /         
+                 1         
+                 2         
+                 7         
+                 .         
+                 0         
+                 .         
+                 0         
+                 .         
+                 1         
+                 :         
+                 8         
+                 0         
+                 0         
+                 0         
+                 /         
+                 s         
+                 s         
+                 e         
+INFO:     Started server process [59888]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     127.0.0.1:54730 - "POST /sse HTTP/1.1" 405 Method Not Allowed
+INFO:     127.0.0.1:54744 - "DELETE /sse HTTP/1.1" 405 Method Not Allowed
+INFO:     127.0.0.1:54750 - "GET /sse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54756 - "POST /messages/?session_id=e2a140951e2442b9bc88a9eed98e83e7 HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:54770 - "POST /messages/?session_id=e2a140951e2442b9bc88a9eed98e83e7 HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:54784 - "POST /messages/?session_id=e2a140951e2442b9bc88a9eed98e83e7 HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:54794 - "POST /sse HTTP/1.1" 405 Method Not Allowed
+INFO:     127.0.0.1:54796 - "DELETE /sse HTTP/1.1" 405 Method Not Allowed
+INFO:     127.0.0.1:54810 - "GET /sse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54820 - "POST /messages/?session_id=f537559256ae46a2947ef3f363c6110a HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:54834 - "POST /messages/?session_id=f537559256ae46a2947ef3f363c6110a HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:54844 - "POST /messages/?session_id=f537559256ae46a2947ef3f363c6110a HTTP/1.1" 202 Accepted
+./start.sh: line 3: 59888 Killed                     venv/bin/python src/server.py

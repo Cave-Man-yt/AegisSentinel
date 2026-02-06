@@ -1,0 +1,15 @@
+{
+    "mcpServers": {
+        "aegis-sentinel": {
+            "command": "/home/socks/Documents/AegisSentinal/venv/bin/python",
+            "args": [
+                "/home/socks/Documents/AegisSentinal/src/server.py"
+            ],
+            "env": {
+                "PYTHONPATH": "/home/socks/Documents/AegisSentinal"
+            },
+            "disabled": false,
+            "alwaysAllow": []
+        }
+    }
+}
